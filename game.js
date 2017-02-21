@@ -30,7 +30,7 @@ var isWinningMove = function(board, row, col) {
     });
 
   return rowWin || colWin || diaWin;
-}
+};
 
 var range = function(from, until, by) {
   var array = [];
@@ -40,4 +40,4 @@ var range = function(from, until, by) {
   }
 
   return array;
-}
+};
