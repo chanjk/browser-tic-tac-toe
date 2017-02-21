@@ -1,0 +1,12 @@
+.board {
+  background: red;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.board > div {
+  float: left;
+  width: 32.9%;
+  padding-top: 32.9%;
+  border: 1px solid black;
+}
