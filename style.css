@@ -61,9 +61,11 @@ h1 {
   display: table;
   width: 80%;
   margin: 5% auto;
+  font-size: 0.8em;
+  line-height: 50%;
 }
 
-.settings p {
+.settings div {
   display: table-cell;
 }
 

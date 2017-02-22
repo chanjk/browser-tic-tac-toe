@@ -48,13 +48,17 @@ var createBoard = function(size) {
   });
 };
 
-var displayWinner = function(textElement, winnerToken) {
-  textElement.text(winnerToken + ' Wins!');
+var displayWinner = function(textElement, text) {
+  textElement.text(text + ' Wins!');
 };
 
 var displayDraw = function(textElement) {
   textElement.text('It\'s a Draw!');
 };
+
+var updateDisplayedWinCount = function(textElement, winCount) {
+  textElement.text(winCount);
+}
 
 var reset = function(board, $board, resultTextElement) {
   var resetBoard = function() {
