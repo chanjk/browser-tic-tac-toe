@@ -7,14 +7,11 @@ html, body {
 }
 
 body {
-  /* background: #bdf2ff;
-  background: -webkit-linear-gradient(45deg, #bdf2ff, #c1f5ff); */
   text-align: center;
   margin: 0;
 }
 
 header {
-  /*font-size: 2.5em;*/
   font-size: 1.5em;
   padding: 7%;
   margin-bottom: 7%;
@@ -34,8 +31,6 @@ h1 {
 .tile {
   position: relative;
   display: inline-block;
-  width: 30%;
-  padding-top: 30%;
   margin: 0.09em 0.2em;
   border: 1px solid black;
 }
@@ -60,7 +55,6 @@ h1 {
   height: 100%;
   text-align: center;
   vertical-align: middle;
-  font-size: 3em;
 }
 
 .settings {

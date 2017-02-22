@@ -1,15 +1,19 @@
+// Setup
 var size = 3;
 var board = createBoard(size);
 var $board = create$Board(size);
 var $result = $('.result');
 var $resetBtn = $('.reset-btn');
 var playerTokens = ['X', 'O'];
-var isGameOver = false;
+var isGameOver = function() {
+  return isWon(board) || isCompletelyFilled(board);
+};
 
 $('.board-container').append($board);
 
+// Events
 $board.on('click', '.content', function(event) {
-  if (!isGameOver && event.target.textContent === '') {
+  if (!isGameOver() && event.target.textContent === '') {
     var row = $(event.target).data('row');
     var col = $(event.target).data('col');
     var currentToken = playerTokens[0];
@@ -17,20 +21,17 @@ $board.on('click', '.content', function(event) {
     event.target.textContent = currentToken;
     board[row][col] = currentToken;
 
-    if (isWinningMove(board, row, col)) {
-      isGameOver = true;
+    if (isWon(board)) {
       displayWinner($result, currentToken);
     } else if (isCompletelyFilled(board)) {
-      isGameOver = true;
       displayDraw($result);
     }
 
     playerTokens.reverse();
   }
 });
-// TODO: Improve this!
+
 $resetBtn.on('click', function() {
   reset(board, $board, $result);
-  isGameOver = false;
   playerTokens = ['X', 'O'];
 })

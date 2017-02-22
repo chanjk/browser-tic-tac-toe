@@ -1,9 +1,12 @@
 var create$Board = function(size) {
   var createTile = function(row, col) {
-    var $tile = $('<div>').addClass('tile');
+    var tileWidth = (0.433 * size + 106.89 / size - 7.6) + '%';
+    var fontSize = (1349.8 / size - 68.6) + '%';
+
+    var $tile = $('<div>').addClass('tile').width(tileWidth).css('padding-top', tileWidth);
     var $wrapper = $('<div>').addClass('wrapper');
     var $wrapperInner = $('<div>').addClass('wrapper-inner');
-    var $content = $('<div>').addClass('content').data('row', row).data('col', col);
+    var $content = $('<div>').addClass('content').data('row', row).data('col', col).css('font-size', fontSize);
 
     return $tile.append($wrapper.append($wrapperInner.append($content)));
   };
@@ -24,8 +27,8 @@ var create$Board = function(size) {
 };
 
 var createBoard = function(size) {
-  return Array(size).fill('').map(function() {
-    return Array(size).fill('');
+  return Array(size).fill(emptyCell).map(function() {
+    return Array(size).fill(emptyCell);
   });
 };
 
@@ -39,11 +42,9 @@ var displayDraw = function(textElement) {
 
 var reset = function(board, $board, resultTextElement) {
   var resetBoard = function() {
-    for (var r = 0; r < board.length; r++) {
-      for (var c = 0; c < board[r].length; c++) {
-        board[r][c] = '';
-      }
-    }
+    board.forEach(function(row) {
+      row.fill(emptyCell);
+    });
   };
 
   var reset$Board = function() {
