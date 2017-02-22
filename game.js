@@ -5,7 +5,7 @@ var emptyCell = null;
 
 var isEmptyCell = function(cell) {
   return cell === emptyCell;
-}
+};
 
 var isCompletelyFilled = function(board) {
   return board.every(function(row) {
@@ -17,7 +17,7 @@ var isCompletelyFilled = function(board) {
 
 var isWon = function(board) {
   var checkRange = range(0, board.length);
-  var diaCheckRange = range(0, board.length, board.length - 1);
+  var diaCheckRange = [0, board.length - 1];
 
   var rowWin = checkRange.some(function(row) {
     return checkRange.every(function(col) {
@@ -39,20 +39,4 @@ var isWon = function(board) {
   });
 
   return rowWin || colWin || diaWin;
-}
-
-var range = function(from, until, by) {
-  if (by === undefined) {
-    by = 1;
-  } else if (by === 0) {
-    return [];
-  }
-
-  var array = [];
-
-  for (var i = from; i < until; i += by) {
-    array.push(i);
-  }
-
-  return array;
 };

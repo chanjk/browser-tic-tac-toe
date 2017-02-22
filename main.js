@@ -34,4 +34,4 @@ $board.on('click', '.content', function(event) {
 $resetBtn.on('click', function() {
   reset(board, $board, $result);
   playerTokens = ['X', 'O'];
-})
+});
