@@ -42,10 +42,12 @@ var isWon = function(board) {
 }
 
 var range = function(from, until, by) {
+  if (by === 0) {
+    return [];
+  }
+
   if (by === undefined) {
     by = 1;
-  } else if (by === 0) {
-    return [];
   }
 
   var array = [];
