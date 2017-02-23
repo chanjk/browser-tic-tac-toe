@@ -8,7 +8,8 @@ Play the game at https://chanjk.github.io/browser-tic-tac-toe/.
 <sup>No installation needed, isn't that great?! :metal:</sup>
 
 ## Table of contents
-WIP
+1. [Introduction](#introduction)
+2. [The nerdy details](#the-nerdy-details)
 
 ## Introduction
 This is a browser version of a very familiar game (if you don't know it, ask Wikipedia (or the person beside you)).
@@ -19,9 +20,6 @@ While not exactly an MMORPG, this game will provide countless hours of fun, and 
 Click on an empty tile to place your move. The turn then switches to the other player's. Play continues likewise until there's a winner or the game ends in a draw.
 
 ## The nerdy details
-
-### The game layout
- > TODO
 
 ### The board
 ```
@@ -44,9 +42,9 @@ Example: `board[1][2]` refers to cell `(1, 2)`.
 
 Why a 2-D array?&mdash;
 
-* It seems like an obvious choice for a board made of rows and columns, as the row and column can be used directly to refer to a cell.
+* It was an obvious choice for a board made of rows and columns, as the row and column can be used directly to refer to a cell.
 
-* Another alternative is to use a 1-D array, but the index of a cell would have to be computed each time from its row and column.
+* Another alternative was to use a 1-D array, but the 2-D array seemed easier to reason and work with.
 
 ***
 
@@ -112,16 +110,27 @@ I really only tried one approach here: the `isCompletelyFilled` function iterate
 ### Multiple rounds and keeping score
 If the game ends in a win, the winner's `wins` property is incremented by 1, and the displayed score is updated.
 
-Clicking the **Play Again** button resets the `board` array and the HTML elements, while preserving the scores.
+Clicking the **Play Again** button resets the `board` array (by making every array element an empty cell) and the tile `div`s (by changing the text content to empty strings), while preserving the scores.
 
-### Unsolved problems
-* Not using `view`
-* Better `reset` approach
-* Getting enough sleep
+### Responsive design
+A mobile-first approach was taken for the game: the site design and layout were firstly optimised for small screens, and then progressively optimised for larger screens.
 
+The result? A game that looks great on a smartphone, and less-great-but-still-OK on a laptop.
+
+### Unresolved problems
+* The `view` properties of the player `object`s are not currently used at all.
+
+* The code for resetting the game is 'clunky' and difficult to scale.
+
+* So is the code to update the webpage
+
+* Sleeping at a proper hour
+
+* Site layout for larger screen sizes could be better
+
+## Future work
+
+## Conclusions and lessons learnt
 _More to come..._
 
-### Conclusions and lessons learnt
-_More to come..._
-
-### Disclaimer
+## Disclaimer
