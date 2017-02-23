@@ -1,5 +1,6 @@
 * {
   font-family: 'Metrophobic', sans-serif;
+  box-sizing: border-box;
 }
 
 html, body {
@@ -12,18 +13,25 @@ body {
 }
 
 header {
+  width: 100%;
+  display: table;
   font-size: 1.5em;
   padding: 7%;
-  margin-bottom: 7%;
-  background: black;
+  background: #373737;
   color: white;
 }
 
 h1 {
+  display: table-cell;
   margin: 0;
+  vertical-align: middle;
 }
 
-.board {
+.game-area {
+  position: relative;
+}
+
+.board-container {
   width: 80%;
   margin: 0 auto;
 }
@@ -31,7 +39,7 @@ h1 {
 .tile {
   position: relative;
   display: inline-block;
-  margin: 0.09em 0.2em;
+  margin: .09em .2em;
   border: 1px solid black;
 }
 
@@ -58,15 +66,29 @@ h1 {
 }
 
 .settings {
-  display: table;
-  width: 80%;
-  margin: 5% auto;
-  font-size: 0.8em;
+  padding: 3%;
+  font-size: .8em;
   line-height: 50%;
+  margin-bottom: 5%;
+  background: #5a2020;
+  -webkit-box-shadow: inset;
+  -moz-box-shadow: inset;
+  box-shadow: inset 0 .2em 1.2em #1f1f1f;
+  color: white;
 }
 
-.settings div {
+.settings-content {
+  display: table;
+  width: 100%;
+}
+
+.settings-content div {
   display: table-cell;
+  vertical-align: middle;
+}
+
+.player-one, .player-two {
+  width: 25%;
 }
 
 .player-one {
@@ -78,7 +100,15 @@ h1 {
 }
 
 .result {
+  position: absolute;
+  top: 35%;
+  width: 100%;
+  padding: 3%;
+  display: none;
   font-weight: bold;
+  font-size: 2em;
+  background: #040;
+  color: white;
 }
 
 .reset-btn {
@@ -89,4 +119,64 @@ h1 {
   background: red;
   color: white;
   border-width: 1px;
+}
+
+@media (min-width: 768px) {
+  .main {
+    display: table;
+    width: 100%;
+    height: 80%;
+  }
+
+  header {
+    height: 20%;
+    font-size: 2em;
+    padding: 0;
+  }
+
+  .game-area {
+    width: 80%;
+    display: table-cell;
+  }
+
+  .board-container {
+    margin-top: 5%;
+    width: 50%;
+  }
+
+  .settings {
+    display: table-cell;
+    width: 20%;
+    font-size: 1.5em;
+    padding: 1%;
+    margin: 0;
+    line-height: normal;
+  }
+
+  .settings-content, .settings-content div {
+    display: block;
+    text-align: center;
+  }
+
+  .settings-content div, .settings-content p {
+    width: 100%;
+  }
+
+  .player-one {
+    margin-bottom: 50%;
+  }
+}
+
+@media (min-width: 1366px) {
+  header {
+    font-size: 3em;
+  }
+
+  .board-container {
+    width: 35%;
+  }
+
+  .settings {
+    font-size: 2.5em;
+  }
 }

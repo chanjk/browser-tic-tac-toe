@@ -12,19 +12,25 @@
   <header>
     <h1>Tic-Tac-Toe</h1>
   </header>
-  <div class="settings">
-    <div class="player-one">
-      <p>Player 1: X</p>
-      <p>Wins: <span class="win-count">0</span></p>
+  <div class="main">
+    <div class="settings">
+      <div class="settings-content">
+        <div class="player-one">
+          <p>Player 1: X</p>
+          <p>Wins: <span class="win-count">0</span></p>
+        </div>
+        <div class="player-two">
+          <p>Player 2: O</p>
+          <p>Wins: <span class="win-count">0</span></p>
+        </div>
+      </div>
     </div>
-    <div class="result"></div>
-    <div class="player-two">
-      <p>Player 2: O</p>
-      <p>Wins: <span class="win-count">0</span></p>
+    <div class="game-area">
+      <div class="board-container"></div>
+      <div class="result"></div>
+      <button type="reset" class="reset-btn">Play Again</button>
     </div>
   </div>
-  <div class="board-container"></div>
-  <button type="reset" class="reset-btn">Start Over</button>
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
   <script src="game.js"></script>
   <script src="helpers.js"></script>
