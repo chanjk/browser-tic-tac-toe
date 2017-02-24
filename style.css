@@ -112,11 +112,10 @@ h1 {
 }
 
 .reset-btn {
-  width: 50%;
-  height: 8%;
+  padding: 0.8em;
   margin: 5%;
   font-size: 1.5em;
-  background: red;
+  background: cornflowerblue;
   color: white;
   border-width: 1px;
 }
