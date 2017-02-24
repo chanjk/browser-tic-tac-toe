@@ -9,7 +9,11 @@ Play the game at https://chanjk.github.io/browser-tic-tac-toe/.
 
 ## Table of contents
 1. [Introduction](#introduction)
-2. [The nerdy details](#the-nerdy-details)
+2. [How to play](#how-to-play)
+3. [The nerdy details](#the-nerdy-details)
+4. [Future work](#future-work)
+5. [Conclusions and lessons learnt](#conclusions-and-lessons-learnt)
+6. [Disclaimer](#disclaimer)
 
 ## Introduction
 This is a browser version of a very familiar game (if you don't know it, ask Wikipedia (or the person beside you)).
@@ -129,8 +133,34 @@ The result? A game that looks great on a smartphone, and less-great-but-still-OK
 * Site layout for larger screen sizes could be better
 
 ## Future work
+* Implement a cleaner way to update the UI (maybe make use of the `view` properties)
+
+* Implement a cleaner way to reset the game
+
+* Allow game customisable options, time limits, board size, game rounds, name & profiles etc.
+
+* Allow players to customise their token (X, O, name, picture, avatar etc.)
+
+* Use timers to display "waiting..." messages while users are waiting to be matched
+
+* Use **LocalStorage** or **SessionStorage** to persist data locally to allow games to continue after page refresh or loss of internet connectivity
+
+* Add the ability to play against a perfect computer player
+
+* Add some creative twists
+
+* Make it look nicer
 
 ## Conclusions and lessons learnt
-_More to come..._
+Phew! Making an interactive game as seemingly simple as Tic-Tac-Toe was surprisingly challenging.
+
+Implementing the game logic didn't prove too difficult, but creating an engaging, interactive and responsive web page took the bulk of my time, and getting everything to look 'just right' was an exercise in frustration. <sup>Why is CSS so bloody annoying?</sup>
+
+Even now, the site deserves more creativity and precision than I can currently give it. It's painfully obvious that my front-end design skills are sorely lacking.
+
+Time management was another challenge. One-by-one, ideas that sprung up like after-rain mushrooms fell by the wayside as the deadline drew nearer. Goals changed: making a good, perfectly polished game was replaced by shipping a _working_ game that met the necessary requirements. Enough time needed to be set aside to write this README.
+
+Going forward, it will be probably worth my while to invest some serious time into bettering my CSS and design skills. Website and web app design have improved by leaps and bounds over the last few years, and the bar has been raised markedly. Challenge accepted.
 
 ## Disclaimer
+I am not liable for any loss in productivity or sleep you might encounter as a result of playing this game.
