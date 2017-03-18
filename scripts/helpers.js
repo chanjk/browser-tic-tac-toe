@@ -1,19 +1,3 @@
-var range = function(from, until, by) {
-  if ((by === 0) || (from > until && by > 0) || (from < until && by < 0)) {
-    return [];
-  }
-
-  if (by === undefined) {
-    by = 1;
-  }
-
-  var numElems = Math.ceil((until - from) / by);
-
-  return Array(numElems).fill('').map(function(elem, index) {
-    return from + index * by;
-  });
-};
-
 var create$Board = function(size) {
   var createTile = function(row, col) {
     var tileWidth = (0.433 * size + 106.89 / size - 7.6) + '%';
