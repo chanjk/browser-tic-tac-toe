@@ -2,45 +2,53 @@ var boardModel = function(size) {
   var that = {}
   var emptyCell = null;
 
-  that.board = Array(size).fill().map(function() {
-    return Array(size).fill(emptyCell);
-  });
-
-  that.isEmptyCell = function(cell) {
+  var isEmptyCell = function(cell) {
     return cell === emptyCell;
   };
 
+  var isRowWin = function(state) {
+    return state.some(function(row) {
+      return row.every(function(cell) {
+        return !isEmptyCell(cell) && (cell === row[0]);
+      });
+    });
+  };
+
+  var isColWin = function(state) {
+    return state[0].some(function(cell, index) {
+      return state.every(function(row) {
+        return !isEmptyCell(row[index]) && (row[index] === cell);
+      });
+    });
+  };
+
+  var isDiaWin = function(state) {
+    return [0, state.length - 1].some(function(offset) {
+      return state.every(function(row, index) {
+        var cell = row[Math.abs(offset - index)];
+        return !isEmptyCell(cell) && (cell == state[0][offset]);
+      });
+    });
+  };
+
+  that.state = Array(size).fill().map(function() {
+    return Array(size).fill(emptyCell);
+  });
+
   that.isCompletelyFilled = function() {
-    return that.board.every(function(row) {
-      return !row.some(that.isEmptyCell);
+    return that.state.every(function(row) {
+      return !row.some(isEmptyCell);
     });
   };
 
   that.isWon = function() {
-    var rowWin = that.board.some(function(row) {
-      return row.every(function(cell) {
-        return !that.isEmptyCell(cell) && (cell === row[0]);
-      });
+    return [isRowWin, isColWin, isDiaWin].some(function(cond) {
+      return cond(that.state);
     });
-
-    var colWin = that.board[0].some(function(cell, index) {
-      return that.board.every(function(row) {
-        return !that.isEmptyCell(row[index]) && (row[index] === cell);
-      });
-    });
-
-    var diaWin = [0, size - 1].some(function(offset) {
-      return that.board.every(function(row, index) {
-        var cell = row[Math.abs(offset - index)];
-        return !that.isEmptyCell(cell) && (cell == that.board[0][offset]);
-      });
-    });
-
-    return rowWin || colWin || diaWin;
   };
 
   that.update = function(row, col, newElem) {
-    that.board[row][col] = newElem;
+    that.state[row][col] = newElem;
     return that;
   };
 
