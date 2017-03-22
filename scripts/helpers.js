@@ -1,13 +1,3 @@
-var displayWinner = function(textElement, text) {
-  textElement.text(text + ' Wins!');
-  textElement.show();
-};
-
-var displayDraw = function(textElement) {
-  textElement.text('It\'s a Draw!');
-  textElement.show();
-};
-
 var updateDisplayedWinCount = function(textElement, winCount) {
   textElement.text(winCount);
 }

@@ -1,4 +1,4 @@
-var boardModel = function(size) {
+var board = function(size) {
   var that = {}
   var emptyCell = null;
 
@@ -47,8 +47,8 @@ var boardModel = function(size) {
     });
   };
 
-  that.update = function(row, col, newElem) {
-    that.state[row][col] = newElem;
+  that.update = function(row, col, withToken) {
+    that.state[row][col] = withToken;
     return that;
   };
 
