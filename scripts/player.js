@@ -1,6 +1,7 @@
-var player = function(token, isComputer) {
+var player = function(name, token, isComputer) {
   var that = {}
 
+  that.name = name;
   that.token = token;
   that.isComputer = !!isComputer;
   that.score = 0;
@@ -8,7 +9,7 @@ var player = function(token, isComputer) {
   that.incrementScore = function() {
     that.score += 1;
     return that;
-  }
+  };
 
   return that;
 };

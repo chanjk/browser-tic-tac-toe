@@ -9,7 +9,7 @@ var resultUI = function($container) {
   that.renderDraw = function() {
     $container.text('It\'s a Draw');
     $container.show();
-  }
+  };
 
   return that;
-}
+};

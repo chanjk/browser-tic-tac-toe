@@ -5,10 +5,12 @@ var tictactoeView = function() {
 
   that.boardUI = boardUI($('.board-container'));
   that.resultUI = resultUI($('.result'));
+  that.playersUI = playersUI($('.stats'));
 
   that.renderState = function(sender) { return that.boardUI.render(sender.state); };
   that.renderWin = function(sender, args) { return that.resultUI.renderWin(args.winner); };
   that.renderDraw = function() { return that.resultUI.renderDraw(); };
+  that.renderPlayers = function(sender) { return that.playersUI.render(sender.players); };
 
   that.boardUI.container.on('click', '.content', function(e) {
     var $tile = $(e.target);
@@ -19,4 +21,4 @@ var tictactoeView = function() {
   });
 
   return that;
-}
+};

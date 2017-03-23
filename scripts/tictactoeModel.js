@@ -6,7 +6,7 @@ var tictactoeModel = function() {
   that.drawn = event(that);
 
   that.board = board(3);
-  that.players = [player('O'), player('X')];
+  that.players = [player('Player 1', 'O'), player('Player 2', 'X')];
 
   that.state = that.board.state;
   that.currentPlayer = function() { return that.players[0]; };

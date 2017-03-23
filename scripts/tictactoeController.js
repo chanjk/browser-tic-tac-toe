@@ -3,6 +3,7 @@ var tictactoeController = function(model, view) {
 
   model.updated.subscribe(view.renderState);
   model.won.subscribe(view.renderWin);
+  model.won.subscribe(view.renderPlayers);
   model.drawn.subscribe(view.renderDraw);
 
   view.tileClicked.subscribe(function(sender, args) {
