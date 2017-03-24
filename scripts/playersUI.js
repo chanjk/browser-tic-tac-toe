@@ -2,6 +2,8 @@ var playersUI = function($container) {
   var that = {}
 
   that.render = function(players) {
+    $container.empty();
+
     var $playerOne = create$Player(players[0]).addClass('player-one');
     var $playerTwo = create$Player(players[1]).addClass('player-two');
 
