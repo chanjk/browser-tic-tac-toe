@@ -1,5 +1,5 @@
 var playersUI = function($container) {
-  var that = {}
+  var that = { container: $container }
 
   that.render = function(players) {
     $container.empty();

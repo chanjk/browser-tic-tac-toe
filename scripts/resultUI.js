@@ -11,5 +11,10 @@ var resultUI = function($container) {
     $container.show();
   };
 
+  that.renderNone = function() {
+    $container.text('');
+    $container.hide();
+  };
+
   return that;
 };
