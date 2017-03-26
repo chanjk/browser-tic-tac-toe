@@ -26,7 +26,7 @@ var board = function(size) {
     return [0, state.length - 1].some(function(offset) {
       return state.every(function(row, index) {
         var cell = row[Math.abs(offset - index)];
-        return !isEmptyCell(cell) && (cell == state[0][offset]);
+        return !isEmptyCell(cell) && (cell === state[0][offset]);
       });
     });
   };

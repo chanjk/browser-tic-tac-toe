@@ -1,6 +1,13 @@
 var tictactoeModel = function() {
   var that = {}
 
+  var isTokenOf = function(player) { return function(token) { return token === player.token; }; };
+  var tokenCountOf = function(player) {
+    return that.state().reduce(function(count, row) {
+      return count + row.filter(isTokenOf(player)).length;
+    }, 0);
+  };
+
   that.updated = event(that);
   that.won = event(that);
   that.drawn = event(that);
@@ -12,12 +19,20 @@ var tictactoeModel = function() {
   that.state = function() { return that.board.state; };
   that.isWon = function() { return that.board.isWon(); };
   that.isCompletelyFilled = function() { return that.board.isCompletelyFilled(); };
-  that.currentPlayer = function() { return that.players[0]; };
+
+  that.currentPlayer = function() {
+    if (tokenCountOf(that.players[0]) > tokenCountOf(that.players[1])) {
+      return that.players[1];
+    }
+
+    return that.players[0];
+  };
 
   that.update = function(row, col) {
-    that.board.update(row, col, that.players[0].token);
-    that.updated.publish();
-    that.players.reverse();
+    var currentPlayer = that.currentPlayer();
+
+    that.board.update(row, col, currentPlayer.token);
+    that.updated.publish({ lastMoveBy: currentPlayer });
     return that;
   };
 
@@ -26,9 +41,9 @@ var tictactoeModel = function() {
     that.boardReset.publish();
   };
 
-  that.updated.subscribe(function() {
+  that.updated.subscribe(function(sender, args) {
     if (that.isWon()) {
-      that.won.publish({ winner: that.currentPlayer() });
+      that.won.publish({ winner: args.lastMoveBy });
     } else if (that.isCompletelyFilled()) {
       that.drawn.publish();
     }

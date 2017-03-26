@@ -2,6 +2,7 @@ var tictactoeView = function() {
   var that = {}
 
   that.tileClicked = event(that);
+  that.resetButtonClicked = event(that);
 
   that.boardUI = boardUI($('.board-container'));
   that.resultUI = resultUI($('.result'));
@@ -22,6 +23,10 @@ var tictactoeView = function() {
     if ($tile.text() === '') {
       that.tileClicked.publish({ row: $tile.data('row'), col: $tile.data('col') });
     }
+  });
+
+  $('.reset-btn').click(function() {
+    that.resetButtonClicked.publish();
   });
 
   return that;

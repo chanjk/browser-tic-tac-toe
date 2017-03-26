@@ -13,7 +13,7 @@ var tictactoeController = function(model, view) {
     }
   });
 
-  $('.reset-btn').click(function() {
+  that.view.resetButtonClicked.subscribe(function() {
     that.model.resetBoard();
   });
 
