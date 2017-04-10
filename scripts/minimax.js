@@ -1,5 +1,5 @@
-const MAX_PLAYER = {}
-const MIN_PLAYER = {}
+const MAX_PLAYER = { isMaxPlayer: true }
+const MIN_PLAYER = { isMinPlayer: true }
 
 var node = function(state, children, player) {
   var that = { state: state, children: children, player: player }
@@ -17,13 +17,13 @@ var node = function(state, children, player) {
   that.score = function() {
     var childScores = that.children.map(function(child) { return child.score(); });
 
-    return that.player === MAX_PLAYER ? Math.max(...childScores) : Math.min(...childScores);
+    return that.player.isMaxPlayer ? Math.max(...childScores) : Math.min(...childScores);
   };
 
   that.depthFactor = function() {
     var childDepthFactors = that.children.map(function(child) { return child.depthFactor(); });
 
-    return that.player === MAX_PLAYER ? Math.max(...childDepthFactors) : Math.min(...childDepthFactors);
+    return that.player.isMaxPlayer ? Math.max(...childDepthFactors) : Math.min(...childDepthFactors);
   };
 
   that.winChance = function() {
@@ -34,7 +34,7 @@ var node = function(state, children, player) {
         return [acc[0], acc[1] + chance[1]];
       }
 
-      if (that.player === MAX) {
+      if (that.player.isMaxPlayer) {
         return acc[0] < chance[0] ? acc : chance;
       }
 
@@ -51,11 +51,11 @@ var node = function(state, children, player) {
       return candidates[0];
     }
 
-    if (that.player === MAX_PLAYER) {
+    if (that.player.isMaxPlayer) {
       return candidates.sort(function(a, b) { return winChanceCompareFunction(b, a); })[0];
     }
 
-    if (that.player === MIN_PLAYER) {
+    if (that.player.isMinPlayer) {
       return candidates.sort(winChanceCompareFunction)[0];
     }
   };
@@ -71,4 +71,26 @@ var leaf = function(state, score, depthFactor, winChance) {
   };
 
   return that;
+};
+
+var minimax = function(state, grow, isEndState, evaluate) {
+  var iter = function(state, currentPlayer, nextPlayer, depth) {
+    if (isEndState(state)) {
+      var score = evaluate(state);
+
+      if (currentPlayer.isMaxPlayer) {
+        return leaf(state, score, depth, (score, -1));
+      }
+
+      return leaf(state, score, -depth, (score, 1));
+    }
+
+    var children = grow(state).map(function(child) {
+      return iter(child, nextPlayer, currentPlayer, depth + 1);
+    });
+
+    return node(state, children, currentPlayer);
+  };
+
+  iter(state, MAX_PLAYER, MIN_PLAYER, 0);
 };
