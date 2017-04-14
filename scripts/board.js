@@ -47,10 +47,21 @@ var board = function(size) {
     });
   };
 
-  that.update = function(row, col, elem) {
-    that.state[row][col] = elem;
-    return that;
+  that.update = function(rowIndex, colIndex, elem) {
+    var newBoard = board(that.state.length);
+
+    that.state.forEach(function(row, rowIndex) {
+      row.forEach(function(col, colIndex) {
+        newBoard.state[rowIndex][colIndex] = col;
+      })
+    })
+
+    newBoard.state[rowIndex][colIndex] = elem;
+    
+    return newBoard;
   };
 
   return that;
 };
+
+module.exports = board;

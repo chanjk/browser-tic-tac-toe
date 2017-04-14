@@ -28,10 +28,10 @@ var tictactoeModel = function() {
     return that.players[0];
   };
 
-  that.update = function(row, col) {
+  that.update = function(rowIndex, colIndex) {
     var currentPlayer = that.currentPlayer();
 
-    that.board.update(row, col, currentPlayer.token);
+    that.board = that.board.update(rowIndex, colIndex, currentPlayer.token);
     that.updated.publish({ lastMoveBy: currentPlayer });
     return that;
   };
