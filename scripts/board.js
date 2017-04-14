@@ -47,8 +47,8 @@ var board = function(size) {
     });
   };
 
-  that.update = function(row, col, withToken) {
-    that.state[row][col] = withToken;
+  that.update = function(row, col, elem) {
+    that.state[row][col] = elem;
     return that;
   };
 
