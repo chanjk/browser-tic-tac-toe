@@ -2,14 +2,10 @@ var board = function(size) {
   var that = {}
   var emptyCell = null;
 
-  var isEmptyCell = function(cell) {
-    return cell === emptyCell;
-  };
-
   var isRowWin = function(state) {
     return state.some(function(row) {
       return row.every(function(cell) {
-        return !isEmptyCell(cell) && (cell === row[0]);
+        return !that.isEmptyCell(cell) && (cell === row[0]);
       });
     });
   };
@@ -17,7 +13,7 @@ var board = function(size) {
   var isColWin = function(state) {
     return state[0].some(function(cell, index) {
       return state.every(function(row) {
-        return !isEmptyCell(row[index]) && (row[index] === cell);
+        return !that.isEmptyCell(row[index]) && (row[index] === cell);
       });
     });
   };
@@ -26,9 +22,13 @@ var board = function(size) {
     return [0, state.length - 1].some(function(offset) {
       return state.every(function(row, index) {
         var cell = row[Math.abs(offset - index)];
-        return !isEmptyCell(cell) && (cell === state[0][offset]);
+        return !that.isEmptyCell(cell) && (cell === state[0][offset]);
       });
     });
+  };
+
+  that.isEmptyCell = function(cell) {
+    return cell === emptyCell;
   };
 
   that.state = Array(size).fill().map(function() {
@@ -37,7 +37,7 @@ var board = function(size) {
 
   that.isCompletelyFilled = function() {
     return that.state.every(function(row) {
-      return !row.some(isEmptyCell);
+      return !row.some(that.isEmptyCell);
     });
   };
 
@@ -57,7 +57,7 @@ var board = function(size) {
     })
 
     newBoard.state[rowIndex][colIndex] = elem;
-    
+
     return newBoard;
   };
 
