@@ -24,11 +24,7 @@ var node = function(board, children, player) {
         return [acc[0], acc[1] + chance[1]];
       }
 
-      if (that.player.isMaxPlayer) {
-        return acc[0] < chance[0] ? acc : chance;
-      }
-
-      return acc[0] > chance[0] ? acc : chance;
+      return that.player.isMaxPlayer ? _.minBy([acc, chance], 0) : _.maxBy([acc, chance], 0);
     });
   })();
 
@@ -42,11 +38,7 @@ var node = function(board, children, player) {
       function(candidate) { return candidate.winChance[1]; }
     ]);
 
-    if (that.player.isMaxPlayer) {
-      return _.last(sortedByWinChances);
-    }
-
-    return _.first(sortedByWinChances);
+    return that.player.isMaxPlayer ? _.last(sortedByWinChances) : _.first(sortedByWinChances);
   };
 
   return that;
