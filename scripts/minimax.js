@@ -7,7 +7,7 @@ var node = function(board, children, player) {
   var that = { board: board, children: children, player: player }
 
   that.search = function(board) {
-    return _.isEqual(that.board, board) ? that : that.children.find(function(child) { return _.isEqual(child.board, board); });
+    return _.isEqual(that.board.state, board.state) ? that : that.children.find(function(child) { return _.isEqual(child.board.state, board.state); });
   };
 
   [that.score, that.depthFactor] = (function() {
@@ -48,7 +48,7 @@ var leaf = function(board, score, depthFactor, winChance) {
   var that = { board: board, score: score, depthFactor: depthFactor, winChance: winChance }
 
   that.search = function(board) {
-    return that.board === board ? that : null;
+    return _.isEqual(that.board.state, board.state) ? that : undefined;
   };
 
   return that;
