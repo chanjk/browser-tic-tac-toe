@@ -1,34 +1,24 @@
+const _ = require('./lodash');
+
 const MAX_PLAYER = { isMaxPlayer: true }
 const MIN_PLAYER = { isMinPlayer: true }
 
-var node = function(state, children, player) {
-  var that = { state: state, children: children, player: player }
+var node = function(board, children, player) {
+  var that = { board: board, children: children, player: player }
 
-  var winChanceCompareFunction = function(a, b) {
-    var [winChanceA, winChanceB] = [a.winChance(), b.winChance()];
-
-    return winChanceA[0] === winChanceB[0] ? winChanceA[1] - winChanceB[1] : winChanceA[0] - winChanceB[0];
+  that.search = function(board) {
+    return that.board === board ? that : that.children.find(function(child) { return child.board === board; });
   };
 
-  that.search = function(state) {
-    return that.state === state ? that : that.children.find(function(child) { return child.state === state; });
-  };
+  [that.score, that.depthFactor] = function() {
+    var sortedScoresDepthFactors = _.sortBy(that.children.map(function(child) { return [child.score, child.depthFactor]; }), [0, 1]);
 
-  that.score = function() {
-    var childScores = that.children.map(function(child) { return child.score(); });
-
-    return that.player.isMaxPlayer ? Math.max(...childScores) : Math.min(...childScores);
-  };
-
-  that.depthFactor = function() {
-    var childDepthFactors = that.children.map(function(child) { return child.depthFactor(); });
-
-    return that.player.isMaxPlayer ? Math.max(...childDepthFactors) : Math.min(...childDepthFactors);
-  };
+    return that.player.isMaxPlayer ? _.last(sortedScoresDepthFactors) : _.first(sortedScoresDepthFactors);
+  }();
 
   that.winChance = function() {
     return that.children.map(function(child) {
-      return child.winChance();
+      return child.winChance;
     }).reduce(function(acc, chance) {
       if (acc[0] === chance[0]) {
         return [acc[0], acc[1] + chance[1]];
@@ -40,57 +30,76 @@ var node = function(state, children, player) {
 
       return acc[0] > chance[0] ? acc : chance;
     });
-  };
+  }();
 
   that.bestNext = function() {
-    var candidates = that.children.filter(function(child) {
-      return [child.score(), child.depthFactor()] === [that.score(), that.depthFactor()];
-    });
+    var candidates = _.shuffle(that.children.filter(function(child) {
+      return child.score === that.score && child.depthFactor === that.depthFactor;
+    }));
 
     if (candidates.length === 1) {
       return candidates[0];
     }
 
+    var sortedByWinChances = _.sortBy(candidates, [
+      function(candidate) { return candidate.winChance[0]; },
+      function(candidate) { return candidate.winChance[1]; }
+    ]);
+
     if (that.player.isMaxPlayer) {
-      return candidates.sort(function(a, b) { return winChanceCompareFunction(b, a); })[0];
+      return _.last(sortedByWinChances);
     }
 
     if (that.player.isMinPlayer) {
-      return candidates.sort(winChanceCompareFunction)[0];
+      return _.first(sortedByWinChances);
     }
   };
 
   return that;
 };
 
-var leaf = function(state, score, depthFactor, winChance) {
-  var that = { state: state, score: score, depthFactor: depthFactor, winChance: winChance}
+var leaf = function(board, score, depthFactor, winChance) {
+  var that = { board: board, score: score, depthFactor: depthFactor, winChance: winChance }
 
-  that.search = function(state) {
-    return that.state === state ? that : null;
+  that.search = function(board) {
+    return that.board === board ? that : null;
   };
 
   return that;
 };
 
-var minimax = function(state, grow, isEndState, evaluate) {
-  var iter = function(state, currentPlayer, nextPlayer, depth) {
-    if (isEndState(state)) {
-      var score = evaluate(state);
+var minimax = function(board) {
+  var grow = function(board, currentPlayer) {
+    return _.flatMap(_.range(0, board.state.length), function(rowIndex) {
+      return _.range(0, board.state.length).filter(function(colIndex) {
+        return board.isEmptyCell(board.state[rowIndex][colIndex]);
+      }).map(function(colIndex) {
+        return board.update(rowIndex, colIndex, currentPlayer);
+      });
+    });
+  };
+
+  var iter = function(board, currentPlayer, nextPlayer, depth) {
+    if (board.isWon() || board.isCompletelyFilled()) {
+      var score;
 
       if (currentPlayer.isMaxPlayer) {
-        return leaf(state, score, depth, (score, -1));
+        score = board.isWon() ? -10 : 0;
+        return leaf(board, score, depth, [score, -1]);
       }
 
-      return leaf(state, score, -depth, (score, 1));
+      score = board.isWon() ? 10 : 0;
+      return leaf(board, score, -depth, [score, 1]);
     }
 
-    var children = grow(state).map(function(child) {
+    var children = grow(board, currentPlayer).map(function(child) {
       return iter(child, nextPlayer, currentPlayer, depth + 1);
     });
 
-    return node(state, children, currentPlayer);
+    return node(board, children, currentPlayer);
   };
 
-  iter(state, MAX_PLAYER, MIN_PLAYER, 0);
+  return iter(board, MAX_PLAYER, MIN_PLAYER, 0);
 };
+
+debugger
