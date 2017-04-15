@@ -1,22 +1,22 @@
 const _ = require('./lodash');
 
-const MAX_PLAYER = { isMaxPlayer: true }
-const MIN_PLAYER = { isMinPlayer: true }
+const MAX_PLAYER = { isMaxPlayer: true },
+      MIN_PLAYER = { isMinPlayer: true };
 
 var node = function(board, children, player) {
   var that = { board: board, children: children, player: player }
 
   that.search = function(board) {
-    return that.board === board ? that : that.children.find(function(child) { return child.board === board; });
+    return _.isEqual(that.board, board) ? that : that.children.find(function(child) { return _.isEqual(child.board, board); });
   };
 
-  [that.score, that.depthFactor] = function() {
+  [that.score, that.depthFactor] = (function() {
     var sortedScoresDepthFactors = _.sortBy(that.children.map(function(child) { return [child.score, child.depthFactor]; }), [0, 1]);
 
     return that.player.isMaxPlayer ? _.last(sortedScoresDepthFactors) : _.first(sortedScoresDepthFactors);
-  }();
+  })();
 
-  that.winChance = function() {
+  that.winChance = (function() {
     return that.children.map(function(child) {
       return child.winChance;
     }).reduce(function(acc, chance) {
@@ -30,16 +30,12 @@ var node = function(board, children, player) {
 
       return acc[0] > chance[0] ? acc : chance;
     });
-  }();
+  })();
 
   that.bestNext = function() {
     var candidates = _.shuffle(that.children.filter(function(child) {
       return child.score === that.score && child.depthFactor === that.depthFactor;
     }));
-
-    if (candidates.length === 1) {
-      return candidates[0];
-    }
 
     var sortedByWinChances = _.sortBy(candidates, [
       function(candidate) { return candidate.winChance[0]; },
@@ -50,9 +46,7 @@ var node = function(board, children, player) {
       return _.last(sortedByWinChances);
     }
 
-    if (that.player.isMinPlayer) {
-      return _.first(sortedByWinChances);
-    }
+    return _.first(sortedByWinChances);
   };
 
   return that;
